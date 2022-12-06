@@ -1,0 +1,105 @@
+<div class="flex justify-center items-center h-full h-screen">
+  <div class="w-full max-w-xs md:max-w-md lg:max-w-lg">
+    <form
+      class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      [formGroup]="loginForm"
+    >
+      <div class="lg:inline-flex lg:w-full">
+        <div class="flex items-center mb-2 lg:mb-0 lg:mr-5">
+          <label
+            class="block text-gray-700 text-sm font-bold ml-1 whitespace-nowrap pt-1"
+            for="username"
+          >
+            Username
+          </label>
+        </div>
+
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          placeholder="Username"
+          autocomplete="false"
+          formControlName="username"
+        />
+      </div>
+
+      <div
+        *ngIf="
+          loginForm.get('username')?.invalid &&
+          (loginForm.get('username')?.dirty ||
+            loginForm.get('username')?.touched)
+        "
+        class="text-red-500 mt-1 lg:pl-24"
+      >
+        <div *ngIf="loginForm.get('username')?.errors?.['required']">
+          Username is required.
+        </div>
+      </div>
+
+      <div class="mt-4 lg:inline-flex lg:w-full">
+        <div class="flex items-center mb-2 lg:mb-0 lg:mr-6">
+          <label
+            class="block text-gray-700 text-sm font-bold ml-1 pt-1"
+            for="password"
+          >
+            Password
+          </label>
+        </div>
+
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+
+      <div
+        *ngIf="
+          loginForm.get('password')?.invalid &&
+          (loginForm.get('password')?.dirty ||
+            loginForm.get('password')?.touched)
+        "
+        class="text-red-500 mt-1 lg:pl-24"
+      >
+        <div *ngIf="loginForm.get('password')?.errors?.['required']">
+          Password is required.
+        </div>
+        <div *ngIf="loginForm.get('password')?.errors?.['minlength']">
+          Password must be at least 8 characters long.
+        </div>
+      </div>
+
+      <div class="mb-3 mt-3">
+        <a
+          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          href="#"
+        >
+          Forgot Password?
+        </a>
+      </div>
+
+      <div class="flex items-center mb-6">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 disabled:hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          type="button"
+          [class.btn-disabled]="loginForm.invalid"
+          [disabled]="loginForm.invalid"
+          (click)="onLogin()"
+        >
+          Log In
+        </button>
+      </div>
+
+      <p>
+        Don't have an account?
+        <a
+          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+        >
+          Register here.
+        </a>
+      </p>
+    </form>
+  </div>
+</div>

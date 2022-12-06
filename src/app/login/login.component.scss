@@ -1,0 +1,9 @@
+:host {
+  .btn-disabled {
+    opacity: 0.65;
+
+    &:hover {
+      pointer-events: none;
+    }
+  }
+}

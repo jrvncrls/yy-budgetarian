@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { AddExpenseComponent } from '../add-expense/add-expense.component';
+import { AddPaymentComponent } from '../add-payment/add-payment.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +17,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private readonly unsubscribe$ = new Subject<boolean>();
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
+  ) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
@@ -28,5 +34,21 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log('params', params['id']);
         this.user$.next(params['id']);
       });
+  }
+
+  openAddExpenseModal(): void {
+    const dialogRef = this.dialog.open(AddExpenseComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openAddPaymentModal(): void {
+    const dialogRef = this.dialog.open(AddPaymentComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

@@ -108,5 +108,7 @@
       }
     }
   },
-  "defaultProject": "yy-budgetarian"
+  "cli": {
+    "analytics": "4578eef9-bfc5-4a07-a06a-faed9cf3f5a8"
+  }
 }

@@ -1,0 +1,17 @@
+<div class="flex justify-center h-full h-screen">
+  <div class="w-full">
+    <div class="mt-8 flex justify-center">
+      <p class="font-bold text-2xl lg:text-4xl">
+        WELCOME {{ user$ | async | uppercase }}!
+      </p>
+    </div>
+    <div class="mt-8 flex justify-center">
+      <p>
+        Your current balance is :
+        <span class="font-bold">{{ currentBalance }}</span>
+      </p>
+    </div>
+
+    <app-add-expense></app-add-expense>
+  </div>
+</div>

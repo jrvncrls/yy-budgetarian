@@ -10,9 +10,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
+import { AddPaymentComponent } from './add-payment/add-payment.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, AddExpenseComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, AddExpenseComponent, AddPaymentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

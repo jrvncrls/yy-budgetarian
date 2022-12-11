@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthService, LoginPayload } from '../services/auth/auth.service';
+import {
+  AuthService,
+  LoginPayload,
+  LoginResponse
+} from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +40,9 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.get('password')?.value,
     };
 
-    this.authService.login(payload).subscribe((isAuthorized) => {
-      if (isAuthorized) {
-        this.router.navigate([
-          `home/${this.loginForm.get('username')?.value.toLowerCase()}`,
-        ]);
+    this.authService.login(payload).subscribe((data: LoginResponse) => {
+      if (data.isAuthorized) {
+        this.router.navigate([`home/${data.userId}`]);
       } else {
         this.openNoAccessSnackbar();
       }

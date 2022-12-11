@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ApiPaths } from 'src/app/enums/api-paths.enum';
 import { environment } from 'src/environments/environment';
 
@@ -12,15 +12,31 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getUsers(): Observable<any> {
+  getUsers(): Observable<UserResponse[]> {
     let url = `${this.baseUrl}/${ApiPaths.GetUsers}`;
 
-    return this.httpClient.get(url);
+    return this.httpClient.get(url).pipe(
+      map((data: any) => {
+        return data.result;
+      })
+    );
   }
 
-  getUserByUsername(username: number): Observable<any> {
-    let url = `${this.baseUrl}/${ApiPaths.GetUsers}?username=${username}`;
+  getUserById(id: number): Observable<UserResponse | null> {
+    let url = `${this.baseUrl}/${ApiPaths.GetUsers}?id=${id}`;
 
-    return this.httpClient.get(url);
+    return this.httpClient.get(url).pipe(
+      map((data: any) => {
+        if (data.result.length > 0) {
+          return data.result[0];
+        }
+        return null;
+      })
+    );
   }
+}
+
+export interface UserResponse {
+  id: number;
+  username: string;
 }

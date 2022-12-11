@@ -1,42 +1,63 @@
 <div class="flex justify-center">
-    <div class="w-full max-w-xs md:max-w-md lg:max-w-lg">
-      <form class="">
-        <h2>Add Expense</h2>
-        <div class="my-6">
-          <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1" class="mr-6"
-              >Credit Card</mat-radio-button
-            >
-            <mat-radio-button value="2">Cash</mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="lg:inline-flex lg:w-full mb-6">
-          <div class="flex items-center mb-2 lg:mb-0 lg:mr-5">
-            <label
-              class="block text-gray-700 text-sm font-bold ml-1 whitespace-nowrap pt-1"
-              for="username"
-            >
-              Amount
-            </label>
-          </div>
-
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            placeholder="0.00"
-            autocomplete="false"
-          />
-        </div>
-
-        <div class="flex items-center justify-end">
-          <button
-            class="bg-blue-500 hover:bg-blue-700 disabled:hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-32"
-            type="button"
+  <div class="w-full max-w-xs md:max-w-lg">
+    <form class="" [formGroup]="addExpenseForm">
+      <h2>Add Expense</h2>
+      <div class="my-6">
+        <mat-radio-group aria-label="Select an option" formControlName="method">
+          <mat-radio-button value="Credit Card" class="mr-6"
+            >Credit Card</mat-radio-button
           >
-            Add
-          </button>
+          <mat-radio-button value="Cash">Cash</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="lg:inline-flex lg:w-full mb-6">
+        <div class="flex items-center mb-2 lg:mb-0 lg:mr-10">
+          <label
+            class="block text-gray-700 text-sm font-bold ml-1 whitespace-nowrap pt-1"
+            for="amount"
+          >
+            Amount
+          </label>
         </div>
-      </form>
-    </div>
+
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          placeholder="0.00"
+          autocomplete="false"
+          formControlName="amount"
+        />
+      </div>
+
+      <div class="lg:inline-flex lg:w-full mb-6">
+        <div class="flex items-center mb-2 lg:mb-0 lg:mr-5">
+          <label
+            class="block text-gray-700 text-sm font-bold ml-1 whitespace-nowrap pt-1"
+            for="description"
+          >
+            Description
+          </label>
+        </div>
+
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          placeholder="0.00"
+          autocomplete="false"
+          formControlName="description"
+        />
+      </div>
+
+      <div class="flex items-center justify-end">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 disabled:hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-32"
+          type="button"
+          (click)="addExpense()"
+        >
+          Add
+        </button>
+      </div>
+    </form>
   </div>
+</div>

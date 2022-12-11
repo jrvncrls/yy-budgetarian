@@ -12,10 +12,10 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) {}
 
-  login(body: LoginPayload): Observable<boolean> {
+  login(body: LoginPayload): Observable<LoginResponse> {
     return this.httpClient.post(`${this.baseUrl}/${ApiPaths.Login}`, body).pipe(
       map((response: any) => {
-        return response.result[0].isAuthorized;
+        return response.result[0];
       })
     );
   }
@@ -24,4 +24,9 @@ export class AuthService {
 export interface LoginPayload {
   username: string;
   password: string;
+}
+
+export interface LoginResponse {
+  isAuthorized: boolean;
+  userId: number;
 }

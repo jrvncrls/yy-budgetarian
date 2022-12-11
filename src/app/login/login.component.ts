@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService, LoginPayload } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     protected fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       username: [null, Validators.required],
@@ -29,19 +31,20 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    if (
-      (this.loginForm.get('username')?.value.toLowerCase() === 'yobab' ||
-        this.loginForm.get('username')?.value.toLowerCase() === 'yobu') &&
-      this.loginForm.get('password')?.value === 'YobabYobuForevs123!'
-    ) {
-      this.router.navigate([
-        `home/${this.loginForm
-          .get('username')
-          ?.value.toLowerCase()}`,
-      ]);
-    } else {
-      this.openNoAccessSnackbar();
-    }
+    let payload: LoginPayload = {
+      username: this.loginForm.get('username')?.value.toLowerCase(),
+      password: this.loginForm.get('password')?.value,
+    };
+
+    this.authService.login(payload).subscribe((isAuthorized) => {
+      if (isAuthorized) {
+        this.router.navigate([
+          `home/${this.loginForm.get('username')?.value.toLowerCase()}`,
+        ]);
+      } else {
+        this.openNoAccessSnackbar();
+      }
+    });
   }
 
   private openNoAccessSnackbar(): void {

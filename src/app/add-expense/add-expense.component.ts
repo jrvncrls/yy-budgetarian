@@ -13,7 +13,7 @@ import {
   styleUrls: ['./add-expense.component.scss'],
 })
 export class AddExpenseComponent implements OnInit {
-  @Input() userId!: number;
+  @Input() userId!: string;
   @Output() newBalance = new EventEmitter();
 
   addExpenseForm!: FormGroup;
@@ -31,7 +31,9 @@ export class AddExpenseComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.addExpenseForm.get('method')?.setValue('Credit Card');
+  }
 
   addExpense(): void {
     let payload: AddExpensePayload = {

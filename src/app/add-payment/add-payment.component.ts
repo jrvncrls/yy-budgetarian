@@ -13,7 +13,7 @@ import {
   styleUrls: ['./add-payment.component.scss'],
 })
 export class AddPaymentComponent implements OnInit {
-  @Input() userId!: number;
+  @Input() userId!: string;
   @Output() newBalance = new EventEmitter();
 
   addPaymentForm!: FormGroup;

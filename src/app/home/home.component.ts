@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { AddExpenseComponent } from '../add-expense/add-expense.component';
 import { AddPaymentComponent } from '../add-payment/add-payment.component';
 import { BalanceService } from '../services/balance/balance.service';
@@ -14,9 +14,9 @@ import { UserResponse, UserService } from '../services/user/user.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   userName$ = new BehaviorSubject<string | undefined>('');
-  userId$ = new BehaviorSubject<number>(0);
+  userId$ = new BehaviorSubject<string>('');
 
-  currentBalance$!: Observable<string>;
+  currentBalance$ = new BehaviorSubject<string>('');
 
   private readonly unsubscribe$ = new Subject<boolean>();
 
@@ -36,8 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.activatedRoute.params
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params: Params) => {
-        console.log('params', params['id']);
-        this.userId$.next(+params['id']);
+        this.userId$.next(params['id']);
         this.userService
           .getUserById(params['id'])
           .subscribe((user: UserResponse | null) => {
@@ -45,9 +44,11 @@ export class HomeComponent implements OnInit, OnDestroy {
           });
       });
 
-    this.currentBalance$ = this.balanceService.getBalanceByUserId(
-      this.userId$.value
-    );
+    this.balanceService
+      .getBalanceByUserId(this.userId$.value)
+      .subscribe((balance) => {
+        this.currentBalance$.next(balance);
+      });
   }
 
   openAddExpenseModal(): void {
@@ -55,8 +56,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     dialogRef.componentInstance.userId = this.userId$.value;
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.componentInstance.newBalance.subscribe((bal) => {
+      this.currentBalance$.next(bal);
     });
   }
 
@@ -65,8 +66,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     dialogRef.componentInstance.userId = this.userId$.value;
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.componentInstance.newBalance.subscribe((bal) => {
+      this.currentBalance$.next(bal);
     });
   }
 }

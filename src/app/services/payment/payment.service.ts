@@ -25,5 +25,5 @@ export class PaymentService {
 
 export interface AddPaymentPayload {
   amount: number;
-  userId: number;
+  userId: string;
 }

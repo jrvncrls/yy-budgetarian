@@ -12,12 +12,12 @@ export class BalanceService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getBalanceByUserId(userId: number): Observable<string> {
+  getBalanceByUserId(userId: string): Observable<string> {
     let url = `${this.baseUrl}/${ApiPaths.GetBalance}?userId=${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response: any) => {
-        return response.result[0].amount;
+        return response.result.amount;
       })
     );
   }

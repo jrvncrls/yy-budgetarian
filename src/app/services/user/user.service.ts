@@ -27,8 +27,8 @@ export class UserService {
 
     return this.httpClient.get(url).pipe(
       map((data: any) => {
-        if (data.result.length > 0) {
-          return data.result[0];
+        if (data.result?._id) {
+          return data.result;
         }
         return null;
       })

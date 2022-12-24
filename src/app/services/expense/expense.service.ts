@@ -26,6 +26,6 @@ export class ExpenseService {
 export interface AddExpensePayload {
   amount: number;
   description: string;
-  userId: number;
+  userId: string;
   method: string;
 }
